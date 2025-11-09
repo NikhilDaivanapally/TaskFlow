@@ -3,7 +3,7 @@ import { apiSlice } from "./apiSlice";
 
 export const userApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    // 🔹 Get current user profile
+    // Get current user profile
     getProfile: builder.query({
       query: () => "/user/profile",
       transformResponse: (response: {
@@ -13,7 +13,7 @@ export const userApi = apiSlice.injectEndpoints({
       }) => response.data,
     }),
 
-    // 🔹 Update profile info (name, about, avatar, etc.)
+    // Update profile info
     updateProfile: builder.mutation({
       query: (data) => ({
         url: "/user/profile",
@@ -23,7 +23,7 @@ export const userApi = apiSlice.injectEndpoints({
       //   invalidatesTags: ["User"],
     }),
 
-    // 🔹 Update password
+    // Update password
     updatePassword: builder.mutation({
       query: (data) => ({
         url: "/user/password",
@@ -32,7 +32,7 @@ export const userApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    // 🔹 Delete account (optional)
+    // Delete account (optional)
     deleteAccount: builder.mutation({
       query: () => ({
         url: "/user/delete",

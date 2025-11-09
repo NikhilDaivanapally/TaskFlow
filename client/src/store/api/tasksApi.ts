@@ -45,7 +45,7 @@ export const tasksApi = apiSlice.injectEndpoints({
         message: string;
       }) => response.data,
 
-      providesTags: (result, error, { page }) =>
+      providesTags: (result, _, { page }) =>
         result
           ? [
               ...result.tasks.map(({ _id }: { _id: string }) => ({
@@ -90,7 +90,6 @@ export const tasksApi = apiSlice.injectEndpoints({
           ]);
 
           for (const {
-            queryCacheKey,
             endpointName,
             originalArgs,
           } of allQueries) {
