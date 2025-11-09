@@ -50,10 +50,12 @@ const SigninForm = () => {
   // Handle successful login
   useEffect(() => {
     if (isSuccess && data) {
-      dispatch(setUser(data?.data));
+      console.log(data, "data");
+      dispatch(setUser(data.data?.user));
       toast.success(data?.message);
+      navigate("/dashboard");
     }
-  }, [isSuccess, data, navigate]);
+  }, [isSuccess, data]);
 
   // Handle error responses from API
   useEffect(() => {

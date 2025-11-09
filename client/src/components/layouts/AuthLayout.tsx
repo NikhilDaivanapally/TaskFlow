@@ -2,9 +2,9 @@ import { Outlet } from "react-router";
 
 const AuthLayout = () => {
   return (
-    <div>
+    <main className="w-full h-screen">
       <Outlet />
-    </div>
+    </main>
   );
 };
 

@@ -5,6 +5,7 @@ import { generateAccessAndRefreshToken } from "../utils/tokens";
 import { RegisterInput, LoginInput } from "../schemas/auth.schema";
 import { uploadToCloudinary } from "../utils/cloudinary";
 import { ApiResponse } from "../utils/ApiResponse";
+import { AuthenticatedRequest } from "../types/requests/auth.type";
 
 // COMMON SECURE COOKIE OPTIONS
 const cookieOptions = {
@@ -22,10 +23,11 @@ export const registerUser = async (req: Request, res: Response) => {
     // Check duplicate user
     const existingUser = await User.findOne({ $or: [{ name }, { email }] });
     if (existingUser) {
-      return res.status(400).json({
-        success: false,
-        message: "User with email or username already exists",
-      });
+      return res
+        .status(400)
+        .json(
+          ApiResponse(400, null, "User with email or username already exists")
+        );
     }
 
     // Handle optional profile upload
@@ -103,7 +105,7 @@ export const loginUser = async (req: Request, res: Response) => {
       .status(200)
       .cookie("accessToken", accessToken, cookieOptions)
       .cookie("refreshToken", refreshToken, cookieOptions)
-      .json(ApiResponse(200, sanitizedUser, "Login successful"));
+      .json(ApiResponse(200, { user: sanitizedUser }, "Login successful"));
   } catch (error: any) {
     console.log(error);
     return res
@@ -162,17 +164,24 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
 };
 
 // LOGOUT USER
-export const logoutUser = async (req: Request, res: Response) => {
+export const signoutUser = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const refreshToken = req.cookies?.refreshToken;
-    if (refreshToken) {
-      const decoded = jwt.decode(refreshToken) as { _id: string };
-      if (decoded?._id) {
-        await User.findByIdAndUpdate(decoded._id, {
-          $unset: { refreshToken: null },
-        });
-      }
+    const user = req.user;
+    // const refreshToken = req.cookies?.refreshToken;
+    // if (refreshToken) {
+    //   const decoded = jwt.decode(refreshToken) as { _id: string };
+    //   if (decoded?._id) {
+    //     await User.findByIdAndUpdate(decoded._id, {
+    //       $unset: { refreshToken: null },
+    //     });
+    //   }
+    // }
+    if (user) {
+      await User.findByIdAndUpdate(user?._id, {
+        $unset: { refreshToken: null },
+      });
     }
+
     return res
       .clearCookie("accessToken", cookieOptions)
       .clearCookie("refreshToken", cookieOptions)
