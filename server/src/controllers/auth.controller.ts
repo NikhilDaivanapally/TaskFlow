@@ -167,15 +167,6 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
 export const signoutUser = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const user = req.user;
-    // const refreshToken = req.cookies?.refreshToken;
-    // if (refreshToken) {
-    //   const decoded = jwt.decode(refreshToken) as { _id: string };
-    //   if (decoded?._id) {
-    //     await User.findByIdAndUpdate(decoded._id, {
-    //       $unset: { refreshToken: null },
-    //     });
-    //   }
-    // }
     if (user) {
       await User.findByIdAndUpdate(user?._id, {
         $unset: { refreshToken: null },

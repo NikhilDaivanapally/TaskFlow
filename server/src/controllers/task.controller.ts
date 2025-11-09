@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Task } from "../models/task.model";
 import { AuthenticatedRequest } from "../types/requests/auth.type";
 import { ApiResponse } from "../utils/ApiResponse";
-import { ObjectId } from "bson";
+
 // CREATE TASK
 export const createTask = async (req: AuthenticatedRequest, res: Response) => {
   try {

@@ -9,6 +9,5 @@ router
   .get(verifyJWT, getProfile)
   .patch(verifyJWT, upload.single("profile"), updateProfile);
 
-// tasks
 
 export default router;

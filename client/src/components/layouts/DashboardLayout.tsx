@@ -5,11 +5,9 @@ import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import {
   LayoutDashboard,
   User,
-  Settings,
   Menu,
   X,
   LogOut,
-  Folder,
   CheckCircle,
 } from "lucide-react";
 import { cn } from "../../lib/utils";

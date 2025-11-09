@@ -46,7 +46,6 @@ const Dashboard = () => {
     );
   }
 
-  // ✅ Extract stats data safely
   const { total, inProgress, completed, overdue } = statsData;
 
   const stats = [
@@ -76,7 +75,6 @@ const Dashboard = () => {
     },
   ];
 
-  // ✅ Use real data from API
   const recentTasks = recentData?.recentTasks ?? [];
 
   const getStatusColor = (status: string) => {
