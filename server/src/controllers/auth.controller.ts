@@ -11,7 +11,7 @@ import { AuthenticatedRequest } from "../types/requests/auth.type";
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "strict" as const,
+  sameSite: "none" as const, // allows cross-site cookies
   path: "/",
 };
 
